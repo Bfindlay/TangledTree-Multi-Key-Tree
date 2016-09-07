@@ -1,55 +1,99 @@
 package tangleTree;
 
-public class TangledTree<J, K, V> implements TangleTree<K, J, V> {
+public class TangledTree<K extends Comparable<K>, J extends Comparable<J>, V extends Comparable<V>> {
+
+	private TreeNode<J, K, V> root;
+	private int size;
 
 	public TangledTree() {
-
+		this.size = 0;
+		this.root = null;
 	}
 
-	@Override
-	public Node insert(Node node) {
+	public TreeNode<J, K, V> insert(J j, K k, V v) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	// recursive method to add node with K key
+	public TreeNode<J, K, V> insertK(K k, V v, TreeNode<J, K, V> node) {
+
+		return null;
+	}
+
+	// recursive method to add node with J key
+	public TreeNode<J, K, V> insertJ(J j, V v, TreeNode<J, K, V> node) {
+
+		return null;
+	}
+
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (size == 0);
 	}
 
-	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
-	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public boolean contains(Node node) {
+	public boolean contains(TreeNode<J, K, V> node) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public Node get(Object key) {
+	public TreeNode<J, K, V> get(K key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Node pull(Object key) {
+	public V get(K k, TreeNode<J, K, V> node) {
+		if (node == null) {
+			// k isn't in this subtree
+			return null;
+		}
+
+		// base case: k matches the key in the current entry
+		if (k.compareTo((K) node.getKey()) == 0) {
+			// TODO: return the value
+			return (V) node.getValue();
+		}
+		// recursive case: k < the current entry
+		else if (k.compareTo((K) node.getKey()) < 0) {
+			// TODO: return the result of recursing to the left
+			return get(k, node.getLeft());
+		}
+		// recursive case: k > the current entry
+		else {
+			// TODO: return the result of recursing to the right
+			return get(k, node.getRight());
+		}
+	}
+
+	public TreeNode<J, K, V> pull(J key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Node remove(Node node) {
+	public TreeNode<J, K, V> remove(TreeNode<J, K, V> node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TreeNode<J, K, V> put(TreeNode<J, K, V> node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TreeNode<J, K, V> get(Object key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TreeNode<J, K, V> pull(Object key) {
 		// TODO Auto-generated method stub
 		return null;
 	}

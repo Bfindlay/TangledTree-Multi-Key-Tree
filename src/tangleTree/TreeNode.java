@@ -1,13 +1,14 @@
 package tangleTree;
 
-public class TreeNode<K, J, V> implements Node<K, J, V> {
+public class TreeNode<K extends Comparable<K>, J extends Comparable<J>, V extends Comparable<V>>
+		implements Comparable<TreeNode<J, K, V>> {
 
-	private Node<K, J, V> kLeft;
-	private Node<K, J, V> kRight;
-	private Node<K, J, V> jLeft;
-	private Node<K, J, V> jRight;
-	private Node<K, J, V> kParent;
-	private Node<K, J, V> jParent;
+	private TreeNode<K, J, V> kLeft;
+	private TreeNode<K, J, V> kRight;
+	private TreeNode<K, J, V> jLeft;
+	private TreeNode<K, J, V> jRight;
+	private TreeNode<K, J, V> kParent;
+	private TreeNode<K, J, V> jParent;
 	private V value;
 	private K kKey;
 	private J jKey;
@@ -22,50 +23,41 @@ public class TreeNode<K, J, V> implements Node<K, J, V> {
 		this.value = value;
 	}
 
-	@Override
-	public V value() {
+	public V getValue() {
 		return this.value;
 	}
 
-	@Override
-	public Node<K, J, V> getParent() {
+	public TreeNode<K, J, V> getParent() {
 		return this.kParent;
 	}
 
-	@Override
-	public Node<K, J, V> pullParent() {
+	public TreeNode<K, J, V> pullParent() {
 		return this.jParent;
 	}
 
-	@Override
-	public Node<K, J, V> addParent(Node node) {
+	public TreeNode<K, J, V> addParent(TreeNode node) {
 		this.kParent = node;
 		return node;
 	}
 
-	@Override
-	public Node<K, J, V> setParent(Node node) {
+	public TreeNode<K, J, V> setParent(TreeNode node) {
 		this.jParent = node;
 		return node;
 	}
 
-	@Override
-	public Node<K, J, V> getLeft() {
+	public TreeNode<K, J, V> getLeft() {
 		return this.kLeft;
 	}
 
-	@Override
-	public Node<K, J, V> getRight() {
+	public TreeNode<K, J, V> getRight() {
 		return this.kRight;
 	}
 
-	@Override
-	public Node<K, J, V> pullRight() {
+	public TreeNode<K, J, V> pullRight() {
 		return this.jRight;
 	}
 
-	@Override
-	public Node<K, J, V> pullLeft() {
+	public TreeNode<K, J, V> pullLeft() {
 		return this.jLeft;
 	}
 
@@ -77,28 +69,28 @@ public class TreeNode<K, J, V> implements Node<K, J, V> {
 		return jKey;
 	}
 
-	@Override
-	public Node<K, J, V> addLeft(Node node) {
+	public TreeNode<J, K, V> addLeft(TreeNode node) {
 		this.kLeft = node;
 		return node;
 	}
 
-	@Override
-	public Node<K, J, V> addRight(Node node) {
+	public TreeNode<J, K, V> addRight(TreeNode node) {
 		this.kRight = node;
 		return node;
 	}
 
-	@Override
-	public Node<K, J, V> setLeft(Node node) {
+	public TreeNode<J, K, V> setLeft(TreeNode node) {
 		this.jLeft = node;
 		return node;
 	}
 
-	@Override
-	public Node<K, J, V> setRight(Node node) {
+	public TreeNode<J, K, V> setRight(TreeNode node) {
 		this.jRight = node;
 		return node;
+	}
+
+	public int compareTo(TreeNode<J, K, V> o) {
+		return o.value.compareTo(this.value);
 	}
 
 }
