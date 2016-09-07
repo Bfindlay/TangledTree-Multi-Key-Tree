@@ -1,14 +1,14 @@
 package tangleTree;
 
-public class TreeNode<K extends Comparable<K>, J extends Comparable<J>, V extends Comparable<V>>
+public class TreeNode<J extends Comparable<J>, K extends Comparable<K>, V extends Comparable<V>>
 		implements Comparable<TreeNode<J, K, V>> {
 
-	private TreeNode<K, J, V> kLeft;
-	private TreeNode<K, J, V> kRight;
-	private TreeNode<K, J, V> jLeft;
-	private TreeNode<K, J, V> jRight;
-	private TreeNode<K, J, V> kParent;
-	private TreeNode<K, J, V> jParent;
+	private TreeNode<J, K, V> kLeft;
+	private TreeNode<J, K, V> kRight;
+	private TreeNode<J, K, V> jLeft;
+	private TreeNode<J, K, V> jRight;
+	private TreeNode<J, K, V> kParent;
+	private TreeNode<J, K, V> jParent;
 	private V value;
 	private K kKey;
 	private J jKey;
@@ -17,7 +17,7 @@ public class TreeNode<K extends Comparable<K>, J extends Comparable<J>, V extend
 
 	}
 
-	public TreeNode(K key, J jKey, V value) {
+	public TreeNode(J jKey, K key, V value) {
 		this.kKey = key;
 		this.jKey = jKey;
 		this.value = value;
@@ -27,37 +27,37 @@ public class TreeNode<K extends Comparable<K>, J extends Comparable<J>, V extend
 		return this.value;
 	}
 
-	public TreeNode<K, J, V> getParent() {
+	public TreeNode<J, K, V> getParent() {
 		return this.kParent;
 	}
 
-	public TreeNode<K, J, V> pullParent() {
+	public TreeNode<J, K, V> pullParent() {
 		return this.jParent;
 	}
 
-	public TreeNode<K, J, V> addParent(TreeNode node) {
+	public TreeNode<J, K, V> addParent(TreeNode<J, K, V> node) {
 		this.kParent = node;
 		return node;
 	}
 
-	public TreeNode<K, J, V> setParent(TreeNode node) {
+	public TreeNode<J, K, V> setParent(TreeNode<J, K, V> node) {
 		this.jParent = node;
 		return node;
 	}
 
-	public TreeNode<K, J, V> getLeft() {
+	public TreeNode<J, K, V> getLeft() {
 		return this.kLeft;
 	}
 
-	public TreeNode<K, J, V> getRight() {
+	public TreeNode<J, K, V> getRight() {
 		return this.kRight;
 	}
 
-	public TreeNode<K, J, V> pullRight() {
+	public TreeNode<J, K, V> pullRight() {
 		return this.jRight;
 	}
 
-	public TreeNode<K, J, V> pullLeft() {
+	public TreeNode<J, K, V> pullLeft() {
 		return this.jLeft;
 	}
 
@@ -69,22 +69,22 @@ public class TreeNode<K extends Comparable<K>, J extends Comparable<J>, V extend
 		return jKey;
 	}
 
-	public TreeNode<J, K, V> addLeft(TreeNode node) {
+	public TreeNode<J, K, V> addLeft(TreeNode<J, K, V> node) {
 		this.kLeft = node;
 		return node;
 	}
 
-	public TreeNode<J, K, V> addRight(TreeNode node) {
+	public TreeNode<J, K, V> addRight(TreeNode<J, K, V> node) {
 		this.kRight = node;
 		return node;
 	}
 
-	public TreeNode<J, K, V> setLeft(TreeNode node) {
+	public TreeNode<J, K, V> setLeft(TreeNode<J, K, V> node) {
 		this.jLeft = node;
 		return node;
 	}
 
-	public TreeNode<J, K, V> setRight(TreeNode node) {
+	public TreeNode<J, K, V> setRight(TreeNode<J, K, V> node) {
 		this.jRight = node;
 		return node;
 	}
