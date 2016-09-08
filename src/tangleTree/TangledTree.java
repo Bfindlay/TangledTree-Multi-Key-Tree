@@ -24,6 +24,13 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 			this.kKey = key;
 			this.jKey = jKey;
 			this.value = value;
+			this.kLeft = null;
+			this.kRight = null;
+			this.jLeft = null;
+			this.jRight = null;
+			this.kParent = null;
+			this.jParent = null;
+
 		}
 
 		public V getValue() {
@@ -38,7 +45,7 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 			return this.jParent;
 		}
 
-		public TreeNode<J, K, V> addParent(TreeNode<J, K, V> node) {
+		public TreeNode<J, K, V> pushParent(TreeNode<J, K, V> node) {
 			this.kParent = node;
 			return node;
 		}
@@ -72,12 +79,12 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 			return kKey;
 		}
 
-		public TreeNode<J, K, V> addLeft(TreeNode<J, K, V> node) {
+		public TreeNode<J, K, V> pushLeft(TreeNode<J, K, V> node) {
 			this.kLeft = node;
 			return node;
 		}
 
-		public TreeNode<J, K, V> addRight(TreeNode<J, K, V> node) {
+		public TreeNode<J, K, V> pushRight(TreeNode<J, K, V> node) {
 			this.kRight = node;
 			return node;
 		}
@@ -153,18 +160,50 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 		// recursive case: k < the current entry
 		else if (key.compareTo((K) node.pullKey()) < 0) {
 			// TODO: return the result of recursing to the left
-			return pull(key, node.getLeft());
+			return pull(key, node.pullLeft());
 		}
 		// recursive case: k > the current entry
 		else {
 			// TODO: return the result of recursing to the right
-			return pull(key, node.getRight());
+			return pull(key, node.pullRight());
 		}
 	}
 
 	public TreeNode<J, K, V> insert(J j, K k, V v) {
 		root = insert(j, k, v, this.root);
+		put(j, k, v, this.root);
 		return root;
+	}
+
+	private TreeNode<J, K, V> put(J j, K k, V v, TreeNode<J, K, V> x) {
+		if (x == null) {
+			return new TreeNode<J, K, V>(j, k, v);
+		}
+		int cmp = k.compareTo(x.kKey);
+		if (cmp < 0) {
+			x.kLeft = put(j, k, v, x.kLeft);
+		} else if (cmp > 0) {
+			x.kRight = put(j, k, v, x.kRight);
+		} else {
+			// cmp == 0
+			TreeNode<J, K, V> entry = new TreeNode<J, K, V>(j, k, v);
+			entry.pushParent(entry);
+			int comp = k.compareTo(entry.kParent.kKey);
+			if (comp < 0)
+				entry.pullParent().pushLeft(entry);
+			else if (comp > 0)
+				entry.pullParent().pushRight(entry);
+			TreeNode<J, K, V> left = (x.pullLeft() != null) ? x.pullLeft() : null;
+			TreeNode<J, K, V> right = (x.pullRight() != null) ? x.pullRight() : null;
+			entry.pushLeft(left);
+			entry.pushRight(right);
+			if (left != null)
+				left.pushParent(entry);
+			if (right != null)
+				right.pushParent(entry);
+			return entry;
+		}
+		return x;
 	}
 
 	// recursive method to add node with K key
@@ -173,15 +212,31 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 			size++;
 			return new TreeNode<J, K, V>(j, k, v);
 		}
-		int cmp = k.compareTo(x.kKey);
+		int cmp = j.compareTo(x.jKey);
 		if (cmp < 0) {
-			x.kLeft = insert(j, k, v, x.kLeft);
+			x.jLeft = insert(j, k, v, x.jLeft);
 		} else if (cmp > 0) {
-			x.kRight = insert(j, k, v, x.kRight);
+			x.jRight = insert(j, k, v, x.jRight);
 		} else {
-
+			// cmp == 0
+			TreeNode<J, K, V> entry = new TreeNode<J, K, V>(j, k, v);
+			entry.setParent(entry);
+			int comp = j.compareTo(entry.jParent.jKey);
+			if (comp < 0)
+				entry.getParent().setLeft(entry);
+			else if (comp > 0)
+				entry.getParent().setRight(entry);
+			TreeNode<J, K, V> left = (x.getLeft() != null) ? x.getLeft() : null;
+			TreeNode<J, K, V> right = (x.getRight() != null) ? x.getRight() : null;
+			entry.setLeft(left);
+			entry.setRight(right);
+			if (left != null)
+				left.setParent(entry);
+			if (right != null)
+				right.setParent(entry);
+			return entry;
 		}
-		return null;
+		return x;
 	}
 
 	// recursive method to add node with J key
