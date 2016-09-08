@@ -258,9 +258,12 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 
 	}
 
-	public boolean contains(TreeNode<J, K, V> node) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean containsJ(J j) {
+		return (get(j) != null);
+	}
+
+	public boolean containsK(K k) {
+		return (pull(k) != null);
 	}
 
 	public TreeNode<J, K, V> remove(TreeNode<J, K, V> node) {
