@@ -24,6 +24,63 @@ public class TangledTreeTest {
 
 	}
 
+	public void testStructuredTree() {
+		TangledTree<Integer, String, String> tree = new TangledTree<>();
+		tree.insert(10, "F", "A");
+		tree.insert(5, "G", "B");
+		tree.insert(20, "I", "C");
+		tree.insert(3, "D", "D");
+		tree.insert(12, "C", "E");
+		tree.insert(7, "B", "F");
+		tree.insert(22, "K", "G");
+		assertEquals(7, tree.size());
+
+		assertEquals("A", tree.get(10));
+		assertEquals("A", tree.pull("F"));
+		assertEquals("B", tree.get(5));
+		assertEquals("B", tree.pull("G"));
+		assertEquals("C", tree.get(20));
+		assertEquals("C", tree.pull("I"));
+		assertEquals("D", tree.get(3));
+		assertEquals("D", tree.pull("D"));
+		assertEquals("E", tree.get(12));
+		assertEquals("E", tree.pull("C"));
+		assertEquals("F", tree.get(7));
+		assertEquals("F", tree.pull("B"));
+		assertEquals("G", tree.get(22));
+		assertEquals("G", tree.pull("K"));
+
+		assertNull(tree.get(21));
+		assertNull(tree.pull("Z"));
+	}
+
+	@Test
+	public void testContains() {
+		TangledTree<Integer, String, String> tree = new TangledTree<>();
+		// Inserting elements into the tree
+		tree.insert(10, "F", "A");
+		tree.insert(5, "G", "B");
+		tree.insert(20, "I", "C");
+
+		// testing the elements are there
+		assertEquals("A", tree.get(10));
+		assertEquals("A", tree.pull("F"));
+
+		assertEquals("B", tree.get(5));
+		assertEquals("B", tree.pull("G"));
+
+		assertEquals("C", tree.get(20));
+		assertEquals("C", tree.pull("I"));
+
+		assertEquals(3, tree.size());
+
+		// Begin testing contains
+		assertTrue(tree.containsJ(10));
+		assertFalse(tree.containsJ(1));
+		assertTrue(tree.containsK("F"));
+		assertFalse(tree.containsK("B"));
+	}
+
 	@Test
 	public void testIsEmpty() {
 		TangledTree<Integer, String, String> tree = new TangledTree<>();
