@@ -148,16 +148,35 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 	}
 
 	public V pull(K key) {
-		return null;
+		return pull(key, this.root);
 	}
 
-	public V pull(K key, TreeNode<J, K, V> node) {
-		return null;
+	public V pull(K elem, TreeNode<J, K, V> start) {
+		// If the element isn't found, return null
+		if (start == null) {
+			return null;
+		}
 
+		// Compare the current node's element to the element we're looking for
+		int comparison = start.pullKey().compareTo(elem);
+
+		// If we should look down the left tree
+		if (comparison > 0) {
+			return pull(elem, start.pullLeft());
+		}
+		// If we should look down the right tree
+		else if (comparison < 0) {
+			return pull(elem, start.pullRight());
+		}
+		// If we've found it
+		else {
+			return start.getValue();
+		}
 	}
 
 	public TreeNode<J, K, V> insert(J j, K k, V v) {
-		return insert(j, k, v, this.root);
+		insert(j, k, v, this.root);
+		return insertK(j, k, v, this.root);
 	}
 
 	/**
@@ -199,6 +218,32 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 				return insert;
 			}
 			return insert(j, k, v, node.getRight());
+		}
+		return null;
+	}
+
+	public TreeNode<J, K, V> insertK(J j, K k, V v, TreeNode<J, K, V> node) {
+
+		int cmp = node.pullKey().compareTo(k);
+		if (cmp > 0) {
+
+			// Reached point of insertion
+			if (node.pullLeft() == null) {
+				TreeNode<J, K, V> insert = new TreeNode<J, K, V>(j, k, v);
+				insert.pushParent(node);
+				node.pushLeft(insert);
+				return insert;
+			}
+			return insertK(j, k, v, node.pullLeft());
+		}
+		if (cmp < 0) {
+			if (node.pullRight() == null) {
+				TreeNode<J, K, V> insert = new TreeNode<J, K, V>(j, k, v);
+				insert.pushParent(node);
+				node.pushRight(insert);
+				return insert;
+			}
+			return insertK(j, k, v, node.pullRight());
 		}
 		return null;
 	}

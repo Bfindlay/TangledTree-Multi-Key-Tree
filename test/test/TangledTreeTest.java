@@ -36,30 +36,30 @@ public class TangledTreeTest {
 		tree.insert(7, "B", "F");
 		tree.insert(22, "K", "G");
 
-		assertEquals(7, tree.size());
 		assertEquals("A", tree.get(10));
-		// assertEquals("A", tree.pull("F"));
-		//
+		assertEquals("A", tree.pull("F"));
+
 		assertEquals("B", tree.get(5));
-		// assertEquals("B", tree.pull("G"));
-		//
+		assertEquals("B", tree.pull("G"));
+
 		assertEquals("C", tree.get(20));
-		// assertEquals("C", tree.pull("I"));
-		//
+		assertEquals("C", tree.pull("I"));
+
 		assertEquals("D", tree.get(3));
-		// assertEquals("D", tree.pull("D"));
-		//
+		assertEquals("D", tree.pull("D"));
+
 		assertEquals("E", tree.get(12));
-		// assertEquals("E", tree.pull("C"));
-		//
+		assertEquals("E", tree.pull("C"));
+
 		assertEquals("F", tree.get(7));
-		// assertEquals("F", tree.pull("B"));
-		//
+		assertEquals("F", tree.pull("B"));
+
 		assertEquals("G", tree.get(22));
-		// assertEquals("G", tree.pull("K"));
-		//
+		assertEquals("G", tree.pull("K"));
+
 		assertNull(tree.get(21));
-		// assertNull(tree.pull("Z"));
+		assertNull(tree.pull("Z"));
+		assertEquals(7, tree.size());
 	}
 
 	@Test
@@ -75,26 +75,22 @@ public class TangledTreeTest {
 		tree.insert(7, "B", "F");
 		tree.insert(22, "K", "G");
 
-		System.out.println("root is " + tree.root.getValue());
-		System.out.println("left is " + tree.root.getLeft().getKey());
-
 		// testing the elements are there
 		assertEquals("A", tree.get(10));
-		// assertEquals("A", tree.pull("F"));
-		//
+		assertEquals("A", tree.pull("F"));
+
 		assertEquals("B", tree.get(5));
-		// assertEquals("B", tree.pull("L"));
-		//
-		// assertEquals("C", tree.get(20));
-		// assertEquals("C", tree.pull("I"));
-		//
-		// assertEquals(6, tree.size());
-		//
-		// // Begin testing contains
-		// assertTrue(tree.containsJ(10));
-		// assertFalse(tree.containsJ(1));
-		// assertTrue(tree.containsK("F"));
-		// assertFalse(tree.containsK("B"));
+		assertEquals("B", tree.pull("L"));
+
+		assertEquals("C", tree.get(20));
+		assertEquals("C", tree.pull("I"));
+
+		// Begin testing contains
+		assertTrue(tree.containsJ(10));
+		assertFalse(tree.containsJ(1));
+		assertTrue(tree.containsK("F"));
+		assertTrue(tree.containsK("B"));
+		assertEquals(7, tree.size());
 	}
 
 	@Test
