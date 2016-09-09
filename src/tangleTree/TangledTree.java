@@ -2,7 +2,7 @@ package tangleTree;
 
 public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V extends Comparable<V>> {
 
-	/*** BEGING NESTED TREENODE IMPLEMENTATION ***/
+	/*** BEGIN NESTED TREENODE IMPLEMENTATION ***/
 
 	public class TreeNode<J extends Comparable<J>, K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparable<TreeNode<J, K, V>> {
@@ -105,7 +105,7 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 
 	}
 
-	/*** BEGING TREE IMPLEMENTATION ****/
+	/*** BEGIN TREE IMPLEMENTATION ****/
 
 	public TreeNode<J, K, V> root;
 	private int size;
