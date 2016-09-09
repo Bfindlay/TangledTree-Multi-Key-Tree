@@ -115,98 +115,92 @@ public class TangledTree<J extends Comparable<J>, K extends Comparable<K>, V ext
 		this.root = null;
 	}
 
-	public V get(J key) {
-		return get(key, root);
-	}
-
 	public TreeNode<J, K, V> root() {
 		return this.root;
 	}
 
-	public V get(J j, TreeNode<J, K, V> node) {
-		if (node == null) {
+	public V get(J key) {
+		return get(key, root);
+	}
+
+	public V get(J elem, TreeNode<J, K, V> start) {
+		// If the element isn't found, return null
+		if (start == null) {
 			return null;
 		}
-		int cmp = j.compareTo(node.getKey());
-		System.out.println("compare is " + cmp);
-		if (cmp == 0) {
-			return node.getValue();
-		} else if (cmp < 0) {
-			get(j, node.getRight());
-		} else if (cmp > 0) {
-			get(j, node.getLeft());
+
+		// Compare the current node's element to the element we're looking for
+		int comparison = start.getKey().compareTo(elem);
+
+		// If we should look down the left tree
+		if (comparison > 0) {
+			return get(elem, start.getLeft());
 		}
-		return node.value;
+		// If we should look down the right tree
+		else if (comparison < 0) {
+			return get(elem, start.getRight());
+		}
+		// If we've found it
+		else {
+			return start.getValue();
+		}
 
 	}
 
 	public V pull(K key) {
-		return pull(key, root);
+		return null;
 	}
 
 	public V pull(K key, TreeNode<J, K, V> node) {
+		return null;
+
+	}
+
+	public TreeNode<J, K, V> insert(J j, K k, V v) {
+		return insert(j, k, v, this.root);
+	}
+
+	/**
+	 * Inserts a new Node into the tree, Currently does not replace nodes with
+	 * the same key
+	 * 
+	 * @param j
+	 * @param k
+	 * @param v
+	 * @param node
+	 * @return
+	 */
+	public TreeNode<J, K, V> insert(J j, K k, V v, TreeNode<J, K, V> node) {
 		if (node == null) {
-			return null;
-		}
-		// base case: k matches the key in the current entry
-		if (key.compareTo(node.pullKey()) == 0) {
-			// TODO: return the value
-			return node.getValue();
-		}
-		// recursive case: k < the current entry
-		else if (key.compareTo(node.pullKey()) < 0) {
-			// TODO: return the result of recursing to the left
-			return pull(key, node.pullLeft());
-		}
-		// recursive case: k > the current entry
-		else {
-			// TODO: return the result of recursing to the right
-			return pull(key, node.pullRight());
-		}
-	}
-
-	public void insert(J j, K k, V v) {
-
-		// the resulting subtree after doing the put
-		put(j, k, v, root());
-
-	}
-
-	public TreeNode<J, K, V> put(J key, K k, V val, TreeNode<J, K, V> x) {
-
-		if (x == null) {
-			TreeNode<J, K, V> entry = new TreeNode<J, K, V>(key, k, val);
-			if (root == null)
-				this.root = entry;
+			root = new TreeNode<J, K, V>(j, k, v);
 			size++;
-			return entry;
+			return root;
 		}
-		int cmp = key.compareTo(x.getKey());
-		System.out.println(cmp);
+
+		int cmp = node.getKey().compareTo(j);
+		if (cmp > 0) {
+
+			// Reached point of insertion
+			if (node.getLeft() == null) {
+				TreeNode<J, K, V> insert = new TreeNode<J, K, V>(j, k, v);
+				insert.setParent(node);
+				node.setLeft(insert);
+				size++;
+				return insert;
+			}
+			return insert(j, k, v, node.getLeft());
+		}
 		if (cmp < 0) {
-			x.jLeft = put(key, k, val, x.jLeft);
-		} else if (cmp > 0) {
-			x.jRight = put(key, k, val, x.jRight);
-		} else {
-			// cmp == 0
-			TreeNode<J, K, V> entry = new TreeNode<J, K, V>(key, k, val);
-			entry.setParent(entry);
-			int comp = key.compareTo(entry.getParent().getKey());
-			if (comp < 0)
-				entry.getParent().setLeft(entry);
-			else if (comp > 0)
-				entry.getParent().setRight(entry);
-			TreeNode<J, K, V> left = (x.getLeft() != null) ? x.getLeft() : null;
-			TreeNode<J, K, V> right = (x.getRight() != null) ? x.getRight() : null;
-			entry.setLeft(left);
-			entry.setRight(right);
-			if (left != null)
-				left.setParent(entry);
-			if (right != null)
-				right.setParent(entry);
-			return entry;
+			if (node.getRight() == null) {
+				TreeNode<J, K, V> insert = new TreeNode<J, K, V>(j, k, v);
+				insert.setParent(node);
+				node.setRight(insert);
+				size++;
+				return insert;
+			}
+			return insert(j, k, v, node.getRight());
 		}
-		return x;
+		return null;
 	}
 
 	public boolean isEmpty() {
