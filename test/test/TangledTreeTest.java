@@ -37,11 +37,10 @@ public class TangledTreeTest {
 		tree.insert(22, "K", "G");
 
 		assertEquals(7, tree.size());
-		System.out.println(tree.get(10));
 		assertEquals("A", tree.get(10));
 		// assertEquals("A", tree.pull("F"));
 		//
-		// assertEquals("B", tree.get(5));
+		assertEquals("B", tree.get(5));
 		// assertEquals("B", tree.pull("G"));
 		//
 		assertEquals("C", tree.get(20));
@@ -65,6 +64,7 @@ public class TangledTreeTest {
 
 	@Test
 	public void testContains() {
+
 		TangledTree<Integer, String, String> tree = new TangledTree<>();
 		// Inserting elements into the tree
 		tree.insert(10, "F", "A");
