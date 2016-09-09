@@ -1,6 +1,6 @@
 # Tangled Tree
 
-The TangledTree ADT is an implementation of a standard Java Binary Search Tree with the Ability to store and retrieve a value in a /<KEY, KEY, VALUE> mapping.
+The TangledTree ADT is an implementation of a standard Java Binary Search Tree with the Ability to store and retrieve a value in a \<KEY, KEY, VALUE> mapping.
 This results in a Multi Key Tree Structure and mantains O(log n) for best case searches and insertion.
 
 
