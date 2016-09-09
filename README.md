@@ -16,7 +16,7 @@ This results in a Multi Key Tree Structure and mantains O(log n) for best case s
      
 ```
      
- This implementation uses generics and therefore due to Type erasre overloading the methods is not possible.
+ This implementation uses generics and therefore due to Type erasure, overloading the methods is not possible.
  Access method for each key are as follows:
  
 |**Action**|**J**|**K**|
